@@ -64,6 +64,11 @@ const routers = [
         path: '/delivery',
         name: 'delivery',
         component: () => import(/* webpackChunkName: "home" */ '@/views/order_manage/components/delivery.vue')
+      },
+      {
+        path: '/add_product',
+        name: 'add_product',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/ProductManage/components/add_product.vue')
       }
     ]
   }

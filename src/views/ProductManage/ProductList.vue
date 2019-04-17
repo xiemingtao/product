@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="options">
+			<Button type="info" @click="addProduct">添加商品</Button>
+		</div>
 		<Table border :columns="columns5" :data="data5"></Table>
 		<br>
 		<Page :total="100" show-elevator/>
@@ -27,6 +30,29 @@
 					{
 						title: "Address",
 						key: "address"
+					},
+					{
+						title: '操作',
+						align: 'center',
+						width: '80px',
+						render: (h,params) => {
+							return h('div', [
+									h('Button', {
+											props: {
+													type: 'primary',
+													size: 'small'
+											},
+											style: {
+													marginRight: '5px'
+											},
+											on: {
+												click: () => {
+													console.log(params)
+												}
+											}
+									}, '编辑')
+							]);
+						}
 					}
 				],
 				data5: [
@@ -55,8 +81,22 @@
 						date: "2016-10-04"
 					}
 				]
-			};
+			}
+		},
+		mounted() {},
+		methods: {
+			addProduct() {
+				this.$router.push({
+					name: 'add_product'
+				})
+			}
 		}
-	};
+	}
 </script>
+<style lang="scss">
+	.options {
+		padding: 20px;
+	}
+</style>
+
 

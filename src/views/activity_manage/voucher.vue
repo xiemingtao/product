@@ -2,7 +2,9 @@
   <div class="voucher">
     <div class="voucher_title">
       <span>兑换券名称:</span>
-      <span></span>
+      <span>
+       <Input v-model="value" placeholder="Enter something..." style="width: 300px" />
+      </span>
     </div>
     <div class="voucher_list">
       <Table
@@ -68,7 +70,8 @@
 						porduct: "苏格兰软糖",
 						num: 24
 					}
-				]
+        ],
+        value: ''
       }
     },
     methods:{
