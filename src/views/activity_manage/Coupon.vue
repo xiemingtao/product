@@ -18,16 +18,11 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-
-      }
-    },
-    methods:{
-
-    }
+export default {
+  data () {
+    return {}
   }
+}
 </script>
 
 <style lang='scss'>

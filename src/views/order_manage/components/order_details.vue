@@ -1,5 +1,6 @@
 <template>
   <div class="details">
+    <Button @click="$router.push({name: 'order_list'})" type="info">返回</Button>
     <div class="Consignee_info clearfix">
       <span class="person">收货人: 张三</span>
       <span class="tell">收货电话: 12345678910</span>
@@ -117,9 +118,6 @@ export default {
         line-height: 50px;
       }
       .order_product_list {
-        .product_list_title {
-          
-        }
         .product_list {
           ul {
             width: 100%;

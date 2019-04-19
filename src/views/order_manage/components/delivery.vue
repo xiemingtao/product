@@ -1,5 +1,6 @@
 <template>
   <div class="delivery">
+    <Button @click="$router.push({name: 'order_list'})" type="info">返回</Button>
     <div class="delivery_number">运单号</div>
     <div class="logistics">物流商</div>
   </div>
@@ -22,4 +23,3 @@ export default {
   }
 }
 </style>
-

@@ -11,21 +11,14 @@
     <div class="notepad">
       <div class="">
         <div class="title">待办事项</div>
-        <Input v-model="textarea" type="textarea"  placeholder="添加事项" :rows="4" />
+        <Input v-model="textarea" type="textarea"  placeholder="添加事项" :rows="4" @on-enter="textChange"/>
         <ul class="notepad_list">
-          <li>
+          <li v-for="item in messageList" :key="item.text">
             <span class="text">
-              老板
+              {{item.text}}
             </span>
             <span class="date">
-              <Icon type="md-alarm" />13:38</span>
-          </li>
-          <li>
-            <span class="text">
-              老板
-            </span>
-            <span class="date">
-              <Icon type="md-alarm" />13:38</span>
+              <Icon type="md-alarm" /> {{ item.date | date}}</span>
           </li>
         </ul>
       </div>
@@ -34,7 +27,6 @@
 </template>
 
 <script>
-import echarts from 'echarts'
 // @ is an alias to /src
 import LineEch from './components/Line_ech'
 import Count from './components/count'
@@ -44,16 +36,26 @@ export default {
     LineEch,
     Count
   },
-  data() {
+  data () {
     return {
-      textarea: ''
+      textarea: '',
+      messageList: [
+        {
+          text: '王老板',
+          date: new Date()
+        }
+      ]
     }
   },
-  mounted() {
-
-  },
+  mounted () {},
   methods: {
-
+    textChange (val) {
+      this.messageList.push({
+        text: this.textarea,
+        date: new Date()
+      })
+      this.textarea = ''
+    }
   }
 }
 </script>
@@ -115,4 +117,3 @@ export default {
     }
   }
 </style>
-

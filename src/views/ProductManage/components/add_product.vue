@@ -1,5 +1,9 @@
 <template>
   <div class="add_product">
+    <Button
+    type="info"
+    @click="$router.push({name: 'product_list'})"
+    >返回</Button>
     <div class="product_name">
       <span class="product_label">商品名称:</span>
       <Input v-model="product_name" placeholder="Enter something..." style="width: 300px"/>
@@ -10,7 +14,7 @@
     </div>
     <div class="product_classification">
       <span class="product_label">商品分类:</span>
-      <Select v-model="model1" style="width:200px">
+      <Select v-model="product_classify" style="width:200px">
         <Option
           v-for="item in classification_list"
           :value="item.value"
@@ -91,11 +95,11 @@
               <div
                 style="width: 40px;height:40px;line-height: 40px; border:1px dashed #ccc;border-radius: 4px;cursor: pointer;"
               >
-                <Icon type="ios-camera" size="20"></Icon>
+                <Icon type="md-add" size="20"></Icon>
               </div>
             </Upload>
             <div class="sku_img" v-show="item.sku_img ? true : false">
-              <img :src="item.sku_img" alt>
+              <img :src="item.sku_img" :preview="item.sku_name">
               <Icon type="ios-close-circle" class="upload_icon" size="20" @click="RemoveImg(item.id)"/>
             </div>
           </li>
@@ -123,7 +127,7 @@
     <!-- 是否上架 -->
     <div class="product_ground">
       <span class="ground_title">是否上架</span>
-      <Select v-model="isGround" style="width:100px">
+      <Select v-model="isGround" style="width:50px">
         <Option value="yes">是</Option>
         <Option value="no">否</Option>
       </Select>
@@ -145,7 +149,7 @@
             <Icon type="md-add" size="20"></Icon>
           </div>
         </Upload>
-        <img :src="home_img" class="img">
+        <img :src="home_img" class="img" preview="home_img">
       </div>
     </div>
     <!-- 图片画廊 -->
@@ -154,10 +158,10 @@
       <div class="img_list_content">
         <div class="demo-upload-list" v-for="item in uploadList" :key="item.name">
           <template >
-            <img :src="item.url">
+            <img :src="item.url" preview="1">
             <div class="demo-upload-list-cover">
-              <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
-              <Icon type="ios-trash-outline" @click.native="handleRemove(item.name)"></Icon>
+              <!-- <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon> -->
+              <Icon type="ios-close-circle" @click.native="handleRemove(item.name)" class="remove_img"></Icon>
             </div>
           </template>
         </div>
@@ -184,23 +188,17 @@
     </div>
     <!-- 商品参数 -->
     <div class="product_parameter">
-      <span class="parameter_title">商品参数</span>
+      <span class="parameter_title">商品参数
+        <a href="javascript:;" @click="add_parameter">
+          <Icon type="ios-add-circle" size="20px" />
+        </a>
+      </span>
       <div class="parameter_content">
-        <div class="address">
-          <span class="label">生产地:</span>
-          <Input v-model="address_value" placeholder="生产地" style="width: 300px" />
-        </div>
-        <div class="licence">
-          <span class="label">许可证编号:</span>
-          <Input v-model="licence_value" placeholder="许可证编号" style="width: 300px" />
-        </div>
-        <div class="prime">
-          <span class="label">保质期:</span>
-          <Input v-model="prime_value" placeholder="保质期" style="width: 300px" />
-        </div>
-        <div class="weight">
-          <span class="label">重量:</span>
-          <Input v-model="weight_value" placeholder="重量" style="width: 300px" />
+        <div class="parameter_style" v-for="item in parameter_list" :key="item.id">
+          <Select v-model="item.name" style="width:100px; margin-right: 20px" placement="top">
+              <Option v-for="item in parameters" :value="item" :key="item">{{ item }}</Option>
+          </Select>
+          <Input :v-model="item.value" :placeholder="item.name || '请选择参数属性'" style="width: 300px" />
         </div>
       </div>
     </div>
@@ -223,10 +221,18 @@ export default {
   /* eslint-disable */
   data () {
     return {
-      address_value: '',
-      licence_value: '',
-      prime_value: '',
-      weight_value: '',
+      parameter_list: [
+        {
+          id: 1,
+          name: '生产地',
+          value: '1233'
+        },{
+          id: 2,
+          name: '许可证编号',
+          value: '1233'
+        }
+      ],
+      parameters: ['生产地', '许可证编号', '保质期', '重量'],
       details: '',
       product_name: '苏格兰软糖',
       cityList: [
@@ -254,7 +260,7 @@ export default {
           value: '有机类'
         }
       ],
-      model1: '',
+      product_classify: '',
       sku_list: [],
       spec_list: [
         {
@@ -268,7 +274,7 @@ export default {
       isSpec: false,
       isSpecs: true,
       product_introduce: '这是一个糖果',
-      isGround: '是',
+      isGround: 'yes',
       defaultList: [
         {
           'name': 'a42bdcc1178e62b4694c830f028db5c0',
@@ -290,12 +296,15 @@ export default {
     }
   },
   methods: {
+    // 商品规格select框change事件
     specChange (val) {
       this.addSku()
     },
+    // 商品规格input框change事件
     specValue (value) {
       this.addSku()
     },
+    // 添加商品规格事件
     addSpec () {
       let id = this.spec_list[this.spec_list.length - 1].id + 1
       this.spec_list.push({
@@ -304,12 +313,14 @@ export default {
         spec_value: ''
       })
     },
+    // 删除商品规格事件
     spec_remove (id) {
       let index = this.spec_list.findIndex(item => item.id === id)
       this.spec_list.splice(index, 1)
       this.addSku()
     },
     onProgress (response, file, fileList) {},
+    // 商品库存图片上传之前事件
     beforeUpload (file) {
       const fr = new FileReader()
       fr.readAsDataURL(file)
@@ -317,9 +328,11 @@ export default {
         this.stock_result.sku_img = fr.result
       }
     },
+    // 商品库存删除图片事件
     getid (id) {
       this.stock_result = this.sku_list.find(item => item.id === id)
     },
+    // 商品库存删除图片事件
     RemoveImg (id) {
       this.stock_result = this.sku_list.find(item => item.id === id)
       this.stock_result.sku_img = ''
@@ -368,6 +381,7 @@ export default {
       }, [])
       return array
     },
+    // sku生成函数
     addSku () {
       this.sku_list.splice(0)
       // 过滤掉没有规格值的数据
@@ -405,10 +419,12 @@ export default {
         }
       })
     },
+    // 默认规格切换
     specs () {
       this.isSpec = true
       this.isSpecs = false
     },
+    // 默认规格切换
     specDefault () {
       this.isSpec = false
       this.isSpecs = true
@@ -419,10 +435,12 @@ export default {
         spec_value: ''
       }]
     },
+    // 暂时弃用
     handleView (name) {
       this.imgName = name
       this.visible = true
     },
+    // 删除图片走廊
     handleRemove (file) {
       this.uploadList.splice(this.uploadList.indexOf(file), 1)
     },
@@ -450,18 +468,34 @@ export default {
       }
       console.log(this.uploadList)
     },
+    // 添加商品标签事件
     enter (val) {
       this.tag_list.push(val)
       this.tag_text = ''
     },
+    // 商品标签减少事件
     close (event, name) {
       this.tag_list.splice(this.tag_list.indexOf(name),1)
     },
+    // 首页图片上传事件
     homeUplaod (file) {
       const fr = new FileReader()
       fr.readAsDataURL(file)
       fr.onload = () => {
         this.home_img = fr.result
+      }
+    },
+    // 添加商品参数
+    add_parameter () {
+      if (this.parameter_list.length >= this.parameters.length) {
+        console.log('超出范围')
+      } else {
+        let id =  this.parameter_list[this.parameter_list.length-1].id + 1
+        this.parameter_list.push({
+          id: id,
+          name: '',
+          value: ''
+        })
       }
     }
   },
@@ -477,6 +511,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './add_product.scss'
 </style>
