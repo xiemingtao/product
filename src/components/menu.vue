@@ -1,6 +1,14 @@
 <template>
   <Menu :active-name="this.$route.name"  @on-select="onchange" >
-    <MenuItem :name="item.name" :to="item.path" v-for="item in menuList" :key="item.title">{{item.title}}</MenuItem>
+    <MenuItem
+    :name="item.name"
+    :to="item.path"
+    v-for="item in menuList"
+    :key="item.title"
+    >
+    <Icon :type="item.icon" size=20 />
+    {{item.title}}
+    </MenuItem>
   </Menu>
 </template>
 <script>

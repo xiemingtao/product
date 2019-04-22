@@ -75,7 +75,8 @@ export default {
 
 <style lang="scss">
   .classify_list {
-    padding: 20px;
+    width: 100%;
+    height: 100%;
     .classify_table {
       margin-top: 20px;
     }

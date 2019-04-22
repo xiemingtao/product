@@ -20,48 +20,56 @@ export const menuRouter = {
       path: '/home',
       name: 'home',
       title: '首页',
+      icon: 'ios-home',
       component: () => import(/* webpackChunkName: "home" */ '@/views/Home/Home.vue')
     },
     {
       path: '/product_list',
       name: 'product_list',
       title: '商品管理',
+      icon: 'logo-buffer',
       component: () => import(/* webpackChunkName: "ProductManage" */ '@/views/ProductManage/ProductList.vue')
     },
     {
       path: '/package_management',
       name: 'package_management',
       title: '套餐管理',
+      icon: 'ios-appstore',
       component: () => import(/* webpackChunkName: "Package_management" */ '@/views/Package_management/Package_management.vue')
     },
     {
       path: '/holiday',
       name: 'holiday',
       title: '节日管理',
+      icon: 'ios-calendar',
       component: () => import(/* webpackChunkName: "holiday" */ '@/views/holiday/holiday.vue')
     },
     {
       path: '/classify_list',
       name: 'classify_list',
       title: '分类管理',
+      icon: 'ios-home',
       component: () => import(/* webpackChunkName: "product_classify" */ '@/views/product_classify/classify_list.vue')
     },
     {
       path: '/order_list',
       name: 'order_list',
       title: '订单列表',
+      icon: 'md-reorder',
       component: () => import(/* webpackChunkName: "order_manage" */ '@/views/order_manage/order_list.vue')
     },
     {
       path: '/coupon',
       name: 'coupon',
       title: '优惠券',
+      icon: 'logo-designernews',
       component: () => import(/* webpackChunkName: "activity_manage" */ '@/views/activity_manage/Coupon.vue')
     },
     {
       path: '/voucher',
       name: 'voucher',
       title: '兑换券',
+      icon: 'ios-ionic-outline',
       component: () => import(/* webpackChunkName: "activity_manage" */ '@/views/activity_manage/voucher.vue')
     }
   ]

@@ -67,7 +67,8 @@ export default {
 
 <style lang="scss">
   .holiday_list {
-    padding: 20px;
+    width: 100%;
+    height: 100%;
     .holiday_table {
       margin-top: 20px;
     }

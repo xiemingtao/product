@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="productlist">
     <div class="options">
       <Button type="info" @click="addProduct">添加商品</Button>
     </div>
@@ -94,7 +94,11 @@ export default {
 }
 </script>
 <style lang="scss">
+.productlist {
+  width: 100%;
+  height: 100%;
   .options {
-    padding: 20px;
+    margin-bottom: 20px;
   }
+}
 </style>

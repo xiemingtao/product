@@ -15,7 +15,6 @@ export default {
 .delivery {
   width: 100%;
   height: 100%;
-  padding: 30px;
   .delivery_number,.logistics {
     height: 50px;
     line-height: 50px;

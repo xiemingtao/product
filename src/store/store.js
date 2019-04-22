@@ -7,7 +7,13 @@ export default new Vuex.Store({
     menuList: [...menuRouter.children],
     AllRouter: [...childrenRouter.children, ...menuRouter.children],
     hearderName: '',
-    navRouter: JSON.parse(localStorage.getItem('NavRouter')) || [],
+    navRouter: JSON.parse(localStorage.getItem('NavRouter')) || [
+      {
+        name: 'home',
+        path: '/home',
+        title: '首页'
+      }
+    ],
     targetRouter: ''
   },
   mutations: {
@@ -42,6 +48,22 @@ export default new Vuex.Store({
         state.targetRouter = state.navRouter[index - 1].name
       } else {
         state.targetRouter = state.navRouter[index + 1].name
+      }
+    },
+    // 除了首页全部关闭
+    clearAllRouter (state) {
+      state.navRouter.splice(1)
+      localStorage.setItem('NavRouter', JSON.stringify(state.navRouter))
+    },
+    // 关闭其他触发函数
+    clearOutherRouter (state, name) {
+      let result = state.navRouter.find(item => item.name === name)
+      if (result.name !== 'home') {
+        state.navRouter.splice(0, state.navRouter.length, {
+          name: 'home',
+          path: '/home',
+          title: '首页'
+        }, result)
       }
     }
   },

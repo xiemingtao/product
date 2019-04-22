@@ -88,7 +88,6 @@ export default {
   .details {
     width: 100%;
     height: 100%;
-    padding: 20px;
     .Consignee_info {
       span {
         float: left;

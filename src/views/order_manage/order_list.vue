@@ -94,10 +94,11 @@ export default {
 </script>
 <style lang="scss">
 .order {
-  padding: 20px;
-}
-.order_header {
-  padding-bottom: 5px;
-  text-align: right;
+  width: 100%;
+  height: 100%;
+  .order_header {
+    padding-bottom: 5px;
+    text-align: right;
+  }
 }
 </style>

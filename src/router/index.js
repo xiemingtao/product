@@ -17,9 +17,12 @@ router.beforeEach((to, from, next) => {
   // 路由登陆判断1首先判断Cookie中是否有用户信息,如果有并且前往的页面
   if (to.name === 'login') {
     next()
-  } else if (Cookies.get('user')) {
+    // eslint-disable-next-line no-useless-return
+    return
+  }
+  if (Cookies.get('user')) {
     next()
-  } else if (!Cookies.get('user')) {
+  } else if (!Cookies.get('user') || to.name !== 'login') {
     next({
       name: 'login'
     })

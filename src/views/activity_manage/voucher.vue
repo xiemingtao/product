@@ -110,7 +110,6 @@ export default {
 .voucher {
   width: 100%;
   height: 100%;
-  padding: 10px 10px 10px 40px;
   .voucher_btn {
     height: 80px;
     line-height: 80px;
